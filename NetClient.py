@@ -5,7 +5,7 @@ import socket
 import pickle
 import time
 
-SERVER_IP_OR_HOSTNAME = "Sampson"
+SERVER_IP_OR_HOSTNAME = "Ps-Laptop"
 #SERVER_IP_OR_HOSTNAME = "10.105.244.179"
 TCP_PORT = 10000
 BUFFER_SIZE = 1024
@@ -49,10 +49,10 @@ def recieve(username):
 # Once done using the network, this should be called to cleanup and close connections
 def done():
     s.close()
-
-exampleMessageTuple = (time.time(), "recipient_goes_here", "sender_goes_here", "message_goes_here")
-send(exampleMessageTuple)
-
-print(recieve("username_goes_here"))
-
-done()
+#
+# exampleMessageTuple = (time.time(), "recipient_goes_here", "sender_goes_here", "message_goes_here")
+# send(exampleMessageTuple)
+#
+# print(recieve("username_goes_here"))
+#
+# done()
