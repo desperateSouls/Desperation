@@ -5,7 +5,7 @@ import socket
 import pickle
 import time
 
-SERVER_IP_OR_HOSTNAME = "Ps-Laptop"
+SERVER_IP_OR_HOSTNAME = input("Enter server hostname or IP:\n")
 #SERVER_IP_OR_HOSTNAME = "10.105.244.179"
 TCP_PORT = 10000
 BUFFER_SIZE = 1024
