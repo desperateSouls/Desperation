@@ -3,11 +3,15 @@ import time
 import threading
 import sys
 import queue
+import os
+
+import pickle
 
 import GUI
 import NetClient
 
 class GuiPart:
+    global gui
     def __init__(self, master, myQueue, endCommand):
         self.myQueue = myQueue
         # Set up the GUI
@@ -25,6 +29,7 @@ class GuiPart:
                 pass
 
 class ThreadedClient:
+    global gui
     """
     Launch the main part of the GUI and the worker thread. periodicCall and
     endApplication could reside in the GUI part, but putting them here
@@ -66,6 +71,7 @@ class ThreadedClient:
         self.master.after(200, self.periodicCall)
 
     def workerThread1(self):
+        global cached
         self.netClient = NetClient
 
         while self.running:
@@ -74,7 +80,9 @@ class ThreadedClient:
             # thing.
             for i in range(5):
                 time.sleep(1)
-                for i in gui.poll():
+                self.guiMsg = gui.poll()
+                cached += self.guiMsg
+                for i in self.guiMsg:
                     self.netClient.recieve(i)
             msg = self.netClient.recieve(username)
             for i in msg:
@@ -85,8 +93,12 @@ class ThreadedClient:
 
 root = tkinter.Tk()
 
+cached = []
 gui = GUI.GUI(root)
 username = gui.getUsername()
+
+if os.path.isfile("save.pickle"):
+    cached = pickle.load(open( "save.pickle", "rb" ))
 
 client = ThreadedClient(root)
 while(True):
